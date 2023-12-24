@@ -5,6 +5,8 @@
 ## Build Setup
 
 ``` bash
+# 项目推荐node版本node-version 14.6
+
 # install dependencies
 npm install
 
