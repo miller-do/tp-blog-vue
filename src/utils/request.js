@@ -34,11 +34,14 @@ let loadingInstance
 //       break
 //   }
 // }
-
+console.log('process.env',process.env);
 const instance = axios.create({
   //baseURL,// @/config.baseURL: process.env.NODE_ENV === 'development'? 'vab-mock-server': 'vab-mock-server',
   // baseURL:"http://localhost:80/tp-blog/public/index.php/api/common",
-  timeout: 50000,//requestTimeout,
+  // 如果 axios 的 baseURL 配置的是绝对路径，例如 ‘http://192.168.1.45:8085/’，axios 会直接发送请求而不经过 devServer.proxy
+  // 如果 axios 的 baseURL 设置为相对路径 ‘/api’，则可以正常使用 devserver.proxy 进行请求转发。也不会有跨域问题。
+  baseURL: process.env.baseUrl,//'/admin',//'/index.php/admin'
+  timeout: 50000,
   headers: {
     'Content-Type': 'application/json; charset=utf-8',//contentType,
   },

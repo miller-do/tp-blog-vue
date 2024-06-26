@@ -10,37 +10,48 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/': {// 'api'就等于target,该api可以自定义，比如写成abc，但同时下方的/^api也要改成/^abc了
-		// target:"http://localhost/tp-blog/public/index.php/api/common/",// 服务器的接口地址，即你要访问的真实地址,http或者https都可以
-		target:"http://tpyycms.cn/index.php/admin/",//"http://localhost/tp-yycms/public/index.php/admin/",
-		// 服务器的接口地址，即你要访问的真实地址,http或者https都可以
-		// target:"localhost",//代表监测到以 /api 开头的接口后，把axios请求中前面的本地服务器地址改为后端接口地址，实际发送给后端的请求就是下方后一个请求
-        //如果target配置的是http://XX.XX.XX.XX:8081/abc/def   http://localhost:8080/abc/def --> http://XX.XX.XX.XX:8081/abc/def
-		ws:false,//开启websocket
-        changeOrigin: true,
-		logLevel: 'debug',//调试时，可以输出代理后的真实地址是什么，上线时注释掉即可
-		secure: true,//当是https的时候改成false
-        pathRewrite: {
-			'/^': '', //留空, 代表你在axios里的请求'/api/info' = http://localhost:54321/info
-			// '/^api': '/api',//重写, 代表你在axios里的请求'/api/info' = http://localhost:54321/api/info
-        },
-		//这里理解成用‘/api’代替target里面的地址，
-		//后面组件中我们调接口时直接用api代替 
-		//比如我要调用'http://40.00.100.100:3002/user/add',
-		//直接写‘/api/user/add’即可
-		
+      '/index.php/admin': {// 'api'就等于target,该api可以自定义，比如写成abc，但同时下方的/^api也要改成/^abc了
+			// target:"http://localhost/tp-blog/public/index.php/api/common/",// 服务器的接口地址，即你要访问的真实地址,http或者https都可以
+			target:"http://tpyycms.cn",// 目标接口域名 "http://localhost/tp-yycms/public/index.php/admin/",
+			// 服务器的接口地址，即你要访问的真实地址,http或者https都可以
+			// target:"localhost",//代表监测到以 /api 开头的接口后，把axios请求中前面的本地服务器地址改为后端接口地址，实际发送给后端的请求就是下方后一个请求
+			//如果target配置的是http://XX.XX.XX.XX:8081/abc/def   http://localhost:8080/abc/def --> http://XX.XX.XX.XX:8081/abc/def
+			ws:false,//开启websocket
+			changeOrigin: true,
+			logLevel: 'debug',//调试时，可以输出代理后的真实地址是什么，上线时注释掉即可
+			secure: true,//当是https的时候改成false
+			pathRewrite: {
+				'^/index.php/admin': '/', //留空, 代表你在axios里的请求'/api/info' = http://localhost:54321/info
+				// '/^api': '/api',//重写, 代表你在axios里的请求'/api/info' = http://localhost:54321/api/info 有统一的项目名api的
+			},
+			
+			//这里理解成用‘/api’代替target里面的地址，
+			//后面组件中我们调接口时直接用api代替 
+			//比如我要调用'http://40.00.100.100:3002/user/add',
+			//直接写‘/api/user/add’即可
+		},
+		'/api': {//测试环境
+			target: "http://tpyycms.cn/index.php/admin", 
+			ws: false, //开启websocket
+			changeOrigin: true,
+			logLevel: 'debug', 
+			secure: true, //当是https的时候改成false
+			pathRewrite: {
+				'^/api': '/', 
+			},
+		},
 		//监测多个接口如下
-		// "/zzz": {
-		//   target: "http://XX.XX.XX.XX:8082",
-		//   changeOrigin: true,
-		//   ws: true,
-		// },
-		// "/xxx": {
-		//   target: "http://XX.XX.XX.XX:8083",
-		//   changeOrigin: true,
-		//   ws: true,
-		// },
-     }
+		'/admin': {
+			target: "http://81.71.15.166", 
+			ws: false, //开启websocket
+			changeOrigin: true,
+			logLevel: 'debug', 
+			secure: true, //当是https的时候改成false
+			pathRewrite: {
+				'^/admin': '/admin', 
+			},
+		},
+		
     },
 
     // Various Dev Server settings

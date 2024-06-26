@@ -14,6 +14,9 @@ import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
 
+import 'imagehover.css/css/imagehover.min.css'
+import 'skitter-slider/dist/skitter.css'
+
 import '../static/css/common.css'
 Vue.use(ElementUI);     //全局注入element
 
@@ -21,6 +24,7 @@ import qs from 'qs'
 Vue.prototype.$qs = qs
 
 Vue.config.productionTip = false
+Vue.prototype.$baseUrl = process.env.baseUrl
 
 /* 全局lodash */
 // Vue.prototype.$baseLodash = lodash
